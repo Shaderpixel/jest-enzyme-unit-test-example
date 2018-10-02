@@ -134,8 +134,23 @@ import base from '../base';
 //   }
 // }
 
-import logo from '../../public/images/crab.jpg';
+import logo from '../logo.svg';
+import LoadingIndicator from "./LoadingIndicator";
+
 class App extends React.Component {
+	state = {
+		isLoading: true,
+	};
+
+	componentDidMount() {
+		this.timer = setTimeout(
+				() => this.setState({ isLoading: false }), 2000
+		);
+	}
+
+	componentWillUnmount() {
+		clearTimeout(this.timer);
+	}
 
 	render() {
 		return (
@@ -144,9 +159,10 @@ class App extends React.Component {
 						<img src={logo} className="App-logo" alt="logo" />
 						<h1 className="App-title">Welcome to React</h1>
 					</header>
-					<p className="App-intro">
-						To get started, edit <code>src/App.js</code> and save to reload.
-					</p>
+					<pre>isLoading: {String(this.state.isLoading)}</pre>
+					<LoadingIndicator isLoading={this.state.isLoading}>
+						<div>ahoy!</div>
+					</LoadingIndicator>
 				</div>
 		);
 	}
